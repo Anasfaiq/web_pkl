@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  min-height: 100vh; /* ensure container fills viewport */
+  background: #ffffff; /* white page background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 420px;
+  height: auto;
+  margin: auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card h3 {
+  margin-bottom: 30px;
+  color: #345240;
+  text-align: center;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px 10px;
+  border: none;
+  border-bottom: 2px solid rgb(98, 93, 173);
+  background: transparent;
+  color: #345240;
+  outline: none;
+  font-size: 16px;
+}
+
+.input-box label {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+/* animasi label naik */
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -10px;
+  left: 5px;
+  font-size: 13px;
+}
+
+/* border berubah warna pas fokus */
+.input-box input:focus {
+  border-bottom: 2px solid #353899;
+}
+
+/* button {
+  width: 100%;
+  padding: 10px;
+  background: #345240;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #3e6240;
+} */

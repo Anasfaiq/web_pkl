@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="../assets/logo6.1.png">
+
+  <style>
+    .sidebar-label {
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+    }
+    .sidebar-label.show {
+      opacity: 1;
+    }
+
+    #sidebar {
+      box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25);
+      border-radius: 15px;
+      margin-left: -13px;
+    }
+  </style>
+  
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <!-- sidebar -->
+  <div id="sidebar" class="sidebar z-10 fixed top-0 left-0 w-24 flex-shrink-0 h-screen text-white shadow-md flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out
+                          bg-[linear-gradient(135deg,_#4949ec_0%,_#643fc0_50%,_#a8abff_100%)]">
+    <div class="w-full mb-4 flex justify-center items-center border-b border-gray-800 pl-4 py-4">
+      <button id="toggleSidebar" class="flex items-center justify-center w-full">
+        <img id="image" src="../assets/iconweb/menu.png" alt="logo" class="w-10 invert brightness-0">
+        <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Menu</span>
+      </button>
+    </div>
+
+    <ul class="w-full flex flex-col gap-5 items-start">
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/home.png" alt="">
+        <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Home</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Image</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/user.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">User</span>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/setting.png" alt="">
+        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Setting</span>
+      </li>
+
+    </ul>
+  </div>
+
+
+  
+  <!-- main -->
+  <div class="main flex flex-col justify-start items-center flex-1 min-h-screen bg-gray-100 pl-24 mt-14 transition-all duration-300">
+    <div class="flex w-[1700px] mb-5">
+      <h1 class="text-3xl font-semibold justify-start items-start">Dashboard</h1>
+    </div>
+
+    <div class="grid grid-cols-[1fr_1fr_minmax(320px,390px)] w-[1700px] gap-5">
+
+      <!-- row 2 -->
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto px-3 pb-3 h-60">
+
+        <!-- Judul -->
+        <div class="flex items-center justify-center gap-3 mb-4 relative">
+          <h1 class="text-2xl font-bold text-yellow-600 text-center leading-snug">
+            Top Petugas <br>
+            <span class="text-sm font-semibold text-yellow-500">This Month!</span>
+          </h1>
+          <img src="../assets/iconweb/trophy.png" class="w-12 h-12 absolute right-[160px]" alt="Trophy">
+        </div>
+
+        <div class="flex flex-col items-start gap-3">
+
+          <div class="relative w-[360px] bg-gradient-to-r from-red-400 to-red-500 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
+            <span class="font-bold">1st</span>
+            <span class="font-semibold">Udin Jamal</span>
+            <span class="absolute right-[-95px] text-red-500 font-bold">95 Points!</span>
+          </div>
+
+          <div class="relative w-[420px] bg-gradient-to-r from-orange-300 to-orange-400 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
+            <span class="font-bold">2nd</span>
+            <span class="font-semibold">Soto malang enak</span>
+            <span class="absolute right-[-95px] text-orange-400 font-bold">93 Points!</span>
+          </div>
+
+          <div class="relative w-[480px] bg-gradient-to-r from-yellow-300 to-yellow-400 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
+            <span class="font-bold">3rd</span>
+            <span class="font-semibold">Ipul</span>
+            <span class="absolute right-[-95px] text-yellow-400 font-bold">81 Points!</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto px-10 py-5 h-60 flex flex-col">
+
+        <!-- Judul & Status -->
+        <div class="flex justify-between items-center">
+          <span class="text-2xl font-semibold">Total of Reports This Month!</span>
+          <span class="text-red-500 font-bold text-3xl">Bad</span>
+        </div>
+
+        <!-- Icon + Angka -->
+        <div class="flex items-center py-12 gap-6">
+          <img src="../assets/iconweb/crying.png" class="w-16 h-16" alt="">
+          <span class="text-5xl font-bold text-red-500">980 Reports</span>
+        </div>
+
+      </div>
+
+
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-60 flex flex-col">
+
+        <!-- Judul -->
+        <h1 class="font-semibold text-2xl">Current Data Material</h1>
+
+        <!-- Icon + Angka -->
+        <div class="flex justify-center py-12 items-center gap-3">
+          <img class="w-16 h-16" src="../assets/iconweb/folder-color.png" alt="">
+          <span class="text-5xl font-bold text-blue-600">7903 Data</span>
+        </div>
+
+      </div>
+
+
+
+      <!-- row 3 -->
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      </div>
+
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      </div>
+
+      <div class="row-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-auto">
+      </div>
+
+      <!-- row 4 -->
+      <div class="col-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const labels = document.querySelectorAll('.sidebar-label');
+    const items = document.querySelectorAll('.sidebar-item');
+    const image = document.getElementById('image');
+    const main = document.querySelector('.main');
+
+    let open = false;
+
+    toggleBtn.addEventListener('click', () => {
+      open = !open;
+
+      sidebar.classList.toggle('w-24', !open);
+      sidebar.classList.toggle('w-60', open);
+
+      main.style.paddingLeft = open ? "18rem" : "6rem";
+
+      // item alignment smooth
+      items.forEach(item => {
+        if (open) {
+          item.classList.add('justify-start', 'pl-10');
+          item.classList.remove('justify-center');
+        } else {
+          setTimeout(() => {
+            item.classList.remove('justify-start', 'pl-10');
+            item.classList.add('justify-center');
+          }, 250);
+        }
+      });
+
+      // toggle button alignment
+      if (open) {
+        toggleBtn.classList.add('justify-start', 'pl-5');
+        toggleBtn.classList.remove('justify-center');
+      } else {
+        setTimeout(() => {
+          toggleBtn.classList.remove('justify-start', 'pl-5');
+          toggleBtn.classList.add('justify-center');
+        }, 250);
+      }
+
+      // label fade smooth
+      labels.forEach(label => {
+        if (open) {
+          label.classList.remove('hidden');
+          setTimeout(() => label.classList.add('show'), 10);
+        } else {
+          label.classList.remove('show');
+          setTimeout(() => label.classList.add('hidden'), 200);
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>
