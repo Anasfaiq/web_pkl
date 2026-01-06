@@ -9,13 +9,22 @@
 
   <style>
     .sidebar-label {
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      white-space: nowrap;
-    }
-    .sidebar-label.show {
-      opacity: 1;
-    }
+    opacity: 0;
+    transform: translateX(-8px);
+    max-width: 0;
+    overflow: hidden;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      max-width 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .sidebar-label.show {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 160px;
+  }
 
     #sidebar {
       box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25);
@@ -31,7 +40,7 @@
   <div id="sidebar" class="sidebar z-10 fixed top-0 left-0 w-24 flex-shrink-0 h-screen text-white shadow-md flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out
                           bg-[linear-gradient(135deg,_#4949ec_0%,_#643fc0_50%,_#a8abff_100%)]">
     <div class="w-full mb-4 flex justify-center items-center border-b border-gray-800 pl-4 py-4">
-      <button id="toggleSidebar" class="flex items-center justify-center w-full">
+      <button id="toggleSidebar" class="flex items-center justify-center w-full focus:outline-none">
         <img id="image" src="../assets/iconweb/menu.png" alt="logo" class="w-10 invert brightness-0">
         <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Menu</span>
       </button>
@@ -41,44 +50,66 @@
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/home.png" alt="">
-        <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Home</span>
+        <a href="dashboard.php" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/home.png" alt="">
+          <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Home</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+        <a href="laporan.php" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+        <a href="penilaian_petugas.php" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Image</span>
+        <a href="material.php" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Image</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+        <a href="#" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/user.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">User</span>
+        <a href="#" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/user.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">User</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/setting.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Setting</span>
+        <a href="#" class="flex justify-center items-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/setting.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Setting</span>
+        </a>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <a href="../config/logout.php" class="flex justify-center">
+          <img class="h-7 w-7 invert brightness-0" src="../assets/iconweb/logout.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Log Out </span>
+        </a>
       </li>
 
     </ul>
@@ -226,12 +257,20 @@
       labels.forEach(label => {
         if (open) {
           label.classList.remove('hidden');
-          setTimeout(() => label.classList.add('show'), 10);
+
+          requestAnimationFrame(() => {
+            label.classList.add('show');
+          });
+
         } else {
           label.classList.remove('show');
-          setTimeout(() => label.classList.add('hidden'), 200);
+
+          setTimeout(() => {
+            label.classList.add('hidden');
+          }, 250); // samain sama durasi transition
         }
       });
+
 
     });
   </script>

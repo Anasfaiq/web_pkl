@@ -1,6 +1,66 @@
 <?php
 require_once "../config/conn.php";
 
+// Handle Insert
+if (isset($_POST['add_submit'])) {
+  $tanggal_cek = $_POST['tanggal_cek'];
+  $tanggal_insiden = $_POST['tanggal_insiden'];
+  $nama_mitra = $_POST['nama_mitra'];
+  $nama_petugas_close = $_POST['nama_petugas_close'];
+  $sbu = $_POST['sbu'];
+  $kp = $_POST['kp'];
+  $penyebab = $_POST['penyebab'];
+  $evd_k3 = $_POST['evd_k3'];
+  $evd_summary = $_POST['evd_summary'];
+  $foto_penyebab = $_POST['foto_penyebab'];
+  $foto_perbaikan = $_POST['foto_perbaikan'];
+  $kesesuaian = $_POST['kesesuaian'];
+
+  $sql = "INSERT INTO penilaian_petugas 
+          (tanggal_cek, tanggal_insiden, nama_mitra, nama_petugas_close, sbu, kp, penyebab, evd_k3, evd_summary, foto_penyebab, foto_perbaikan, kesesuaian)
+          VALUES ('$tanggal_cek', '$tanggal_insiden', '$nama_mitra', '$nama_petugas_close', '$sbu', '$kp', '$penyebab', '$evd_k3', '$evd_summary', '$foto_penyebab', '$foto_perbaikan', '$kesesuaian')";
+
+  mysqli_query($conn, $sql);
+  header("Location: penilaian_petugas.php");
+  exit;
+}
+
+// Handle Update
+if (isset($_POST['update_submit'])) {
+  $id = $_POST['update_id'];
+  $tanggal_cek = $_POST['tanggal_cek'];
+  $tanggal_insiden = $_POST['tanggal_insiden'];
+  $nama_mitra = $_POST['nama_mitra'];
+  $nama_petugas_close = $_POST['nama_petugas_close'];
+  $sbu = $_POST['sbu'];
+  $kp = $_POST['kp'];
+  $penyebab = $_POST['penyebab'];
+  $evd_k3 = $_POST['evd_k3'];
+  $evd_summary = $_POST['evd_summary'];
+  $foto_penyebab = $_POST['foto_penyebab'];
+  $foto_perbaikan = $_POST['foto_perbaikan'];
+  $kesesuaian = $_POST['kesesuaian'];
+
+  $sql = "UPDATE penilaian_petugas 
+          SET tanggal_cek='$tanggal_cek',
+              tanggal_insiden='$tanggal_insiden',
+              nama_mitra='$nama_mitra',
+              nama_petugas_close='$nama_petugas_close',
+              sbu='$sbu',
+              kp='$kp',
+              penyebab='$penyebab',
+              evd_k3='$evd_k3',
+              evd_summary='$evd_summary',
+              foto_penyebab='$foto_penyebab',
+              foto_perbaikan='$foto_perbaikan',
+              kesesuaian='$kesesuaian'
+          WHERE id='$id'";
+
+  mysqli_query($conn, $sql);
+  header("Location: penilaian_petugas.php");
+  exit;
+}
+
 function score($value) {
   return $value === "Ada" ? 1 : 0;
 }
@@ -52,44 +112,66 @@ $result = mysqli_query($conn, $query);
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/home.png" alt="">
-        <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Home</span>
+        <a href="dashboard.php" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/home.png" alt="">
+          <span class="ml-3 sidebar-label font-semibold hidden whitespace-nowrap">Home</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+        <a href="laporan.php" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+        <a href="penilaian_petugas.php" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Image</span>
+        <a href="material.php" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Material</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+        <a href="#" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/user.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">User</span>
+        <a href="#" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/user.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">User</span>
+        </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/setting.png" alt="">
-        <span class="ml-3 sidebar-label hidden whitespace-nowrap">Setting</span>
+        <a href="#" class="flex justify-center">
+          <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/setting.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Setting</span>
+        </a>
+      </li>
+
+      <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
+                hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
+        <a href="../config/logout.php" class="flex justify-center">
+          <img class="h-7 w-7 invert brightness-0" src="../assets/iconweb/logout.png" alt="">
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Log Out </span>
+        </a>
       </li>
 
     </ul>
@@ -99,14 +181,18 @@ $result = mysqli_query($conn, $query);
   <div class="main flex justify-center items-center flex-1 min-h-screen bg-gray-100 pl-24 transition-all duration-300">
     
     <!-- card -->
-    <div class="card rounded-lg shadow-xl m-10 p-7 h-[900px] w-auto">
-      <div class="flex items-center gap-5 mb-7">
-        <a href="#">
-          <img class="h-8 w-8" src="../assets/iconweb/back-button.png" alt="">
-        </a>
-        <h1 class="text-3xl font-semibold flex items-center">Penilaian Petugas</h1>
+    <div class="card min-h-screen rounded-lg shadow-xl m-10 p-7 w-auto relative">
+      <div class="flex items-center justify-between gap-5 mb-7">
+        <div class="flex items-center gap-5">
+          <a href="dashboard.php">
+            <img class="h-8 w-8" src="../assets/iconweb/back-button.png" alt="">
+          </a>
+          <h1 class="text-3xl font-semibold flex items-center">Penilaian Petugas</h1>
+        </div>
+        <button id="addBtn" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition duration-200">
+          + Tambah Data
+        </button>
       </div>
-    
     
       <div class="content flex gap-8">
 
@@ -178,12 +264,12 @@ $result = mysqli_query($conn, $query);
 
                 <td class="px-4 py-2 border-b">
                   <div class="flex gap-2">
-                    <a href="delete.php?id=<?= $row['id'] ?>">
-                      <img src="../assets/iconweb/delete.png" class="w-5 h-5">
-                    </a>
-                    <a href="edit.php?id=<?= $row['id'] ?>" class="text-blue-500 hover:text-blue-700 transition duration-200">
+                    <button class="deleteBtn" data-id="<?= $row['id'] ?>">
+                      <img src="../assets/iconweb/delete.png" class="w-5 h-5 cursor-pointer">
+                    </button>
+                    <button class="editBtn" data-id="<?= $row['id'] ?>" class="text-blue-500 hover:text-blue-700 transition duration-200">
                       Edit
-                    </a>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -196,10 +282,109 @@ $result = mysqli_query($conn, $query);
       </div>
     </div>
 
+    <!-- Modal Add/Edit -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 id="modalTitle" class="text-2xl font-semibold">Tambah Data Penilaian</h2>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+
+        <form id="dataForm" method="POST" class="space-y-4">
+          <input type="hidden" id="updateId" name="update_id">
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Tanggal Cek</label>
+              <input type="date" name="tanggal_cek" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Tanggal Insiden</label>
+              <input type="date" name="tanggal_insiden" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Nama Mitra</label>
+              <input type="text" name="nama_mitra" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Nama Petugas Close</label>
+              <input type="text" name="nama_petugas_close" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">SBU</label>
+              <select name="sbu" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih SBU</option>
+                <option value="RBNT">RBNT</option>
+                <option value="RJBB">RJBB</option>
+                <option value="RJBT">RJBT</option>
+                <option value="RJKB">RJKB</option>
+                <option value="RJTG">RJTG</option>
+                <option value="RKLM">RKLM</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">KP</label>
+              <input type="text" name="kp" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div class="col-span-2">
+              <label class="block text-sm font-medium mb-1">Penyebab</label>
+              <input type="text" name="penyebab" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Evd K3</label>
+              <select name="evd_k3" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih</option>
+                <option value="Ada">Ada</option>
+                <option value="Tidak ada">Tidak ada</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Evd Summary</label>
+              <select name="evd_summary" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih</option>
+                <option value="Ada">Ada</option>
+                <option value="Tidak ada">Tidak ada</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Foto Penyebab</label>
+              <select name="foto_penyebab" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih</option>
+                <option value="Ada">Ada</option>
+                <option value="Tidak ada">Tidak ada</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Foto Perbaikan</label>
+              <select name="foto_perbaikan" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih</option>
+                <option value="Ada">Ada</option>
+                <option value="Tidak ada">Tidak ada</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Kesesuaian</label>
+              <select name="kesesuaian" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                <option value="">Pilih</option>
+                <option value="Ada">Ada</option>
+                <option value="Tidak ada">Tidak ada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex gap-3 justify-end mt-6">
+            <button type="button" id="cancelBtn" class="px-5 py-2 border border-gray-300 rounded hover:bg-gray-100">Batal</button>
+            <button type="submit" id="submitBtn" class="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
 
 
   <script>
+    // Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggleSidebar');
     const labels = document.querySelectorAll('.sidebar-label');
@@ -249,6 +434,79 @@ $result = mysqli_query($conn, $query);
         }
       });
 
+    });
+
+    // Modal CRUD
+    const modal = document.getElementById('modal');
+    const addBtn = document.getElementById('addBtn');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const dataForm = document.getElementById('dataForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const updateId = document.getElementById('updateId');
+
+    // Open Modal for Add
+    addBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modalTitle.textContent = 'Tambah Data Penilaian';
+      submitBtn.textContent = 'Simpan';
+      submitBtn.name = 'add_submit';
+      updateId.value = '';
+      dataForm.reset();
+    });
+
+    // Close Modal
+    closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+    cancelBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+    // Close Modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // Edit Button
+    document.querySelectorAll('.editBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = this.dataset.id;
+        
+        // Fetch data dari server
+        fetch(`get_penilaian.php?id=${id}`)
+          .then(res => res.json())
+          .then(data => {
+            document.querySelector('input[name="tanggal_cek"]').value = data.tanggal_cek;
+            document.querySelector('input[name="tanggal_insiden"]').value = data.tanggal_insiden;
+            document.querySelector('input[name="nama_mitra"]').value = data.nama_mitra;
+            document.querySelector('input[name="nama_petugas_close"]').value = data.nama_petugas_close;
+            document.querySelector('select[name="sbu"]').value = data.sbu;
+            document.querySelector('input[name="kp"]').value = data.kp;
+            document.querySelector('input[name="penyebab"]').value = data.penyebab;
+            document.querySelector('select[name="evd_k3"]').value = data.evd_k3;
+            document.querySelector('select[name="evd_summary"]').value = data.evd_summary;
+            document.querySelector('select[name="foto_penyebab"]').value = data.foto_penyebab;
+            document.querySelector('select[name="foto_perbaikan"]').value = data.foto_perbaikan;
+            document.querySelector('select[name="kesesuaian"]').value = data.kesesuaian;
+
+            updateId.value = data.id;
+            modalTitle.textContent = 'Edit Data Penilaian';
+            submitBtn.textContent = 'Update';
+            submitBtn.name = 'update_submit';
+
+            modal.classList.remove('hidden');
+          });
+      });
+    });
+
+    // Delete Button
+    document.querySelectorAll('.deleteBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = this.dataset.id;
+        if (confirm('Yakin ingin menghapus data ini?')) {
+          window.location.href = `delete_penilaian.php?id=${id}`;
+        }
+      });
     });
   </script>
 
