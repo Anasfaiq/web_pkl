@@ -1,10 +1,84 @@
+<?php
+require_once "../config/conn.php";
+
+// Top Petugas
+$topPetugasQuery = "SELECT nama_petugas_close, 
+                          (COUNT(CASE WHEN evd_k3='Ada' THEN 1 END) +
+                           COUNT(CASE WHEN evd_summary='Ada' THEN 1 END) +
+                           COUNT(CASE WHEN foto_penyebab='Ada' THEN 1 END) +
+                           COUNT(CASE WHEN foto_perbaikan='Ada' THEN 1 END) +
+                           COUNT(CASE WHEN kesesuaian='Ada' THEN 1 END)) as total_skor
+                    FROM penilaian_petugas 
+                    GROUP BY nama_petugas_close 
+                    ORDER BY total_skor DESC LIMIT 3";
+$topPetugasResult = mysqli_query($conn, $topPetugasQuery);
+$topPetugas = mysqli_fetch_all($topPetugasResult, MYSQLI_ASSOC);
+
+// Fallback jika tidak ada data
+if (empty($topPetugas)) {
+  $topPetugas = [
+    ['nama_petugas_close' => 'Belum ada data', 'total_skor' => 0],
+    ['nama_petugas_close' => 'Belum ada data', 'total_skor' => 0],
+    ['nama_petugas_close' => 'Belum ada data', 'total_skor' => 0]
+  ];
+}
+
+// Total Reports
+$totalReportsQuery = "SELECT COUNT(*) as total FROM laporan_gangguan";
+$totalReportsResult = mysqli_query($conn, $totalReportsQuery);
+$totalReportsData = mysqli_fetch_assoc($totalReportsResult);
+$totalReports = $totalReportsData['total'];
+
+// Status berdasarkan jumlah reports
+if ($totalReports <= 5) {
+  $status = "Bad";
+  $statusColor = "red";
+  $statusEmoji = "😢";
+} elseif ($totalReports <= 10) {
+  $status = "Good";
+  $statusColor = "green";
+  $statusEmoji = "😊";
+} else {
+  $status = "Excellent";
+  $statusColor = "blue";
+  $statusEmoji = "🎉";
+}
+
+// Current Data Material
+$materialQuery = "SELECT COUNT(*) as total FROM foto_material";
+$materialResult = mysqli_query($conn, $materialQuery);
+$materialData = mysqli_fetch_assoc($materialResult);
+$totalMaterial = $materialData['total'];
+
+// Chart Penilaian Petugas (SBU)
+$chartPetugasQuery = "SELECT sbu, COUNT(*) as jumlah FROM penilaian_petugas GROUP BY sbu";
+$chartPetugasResult = mysqli_query($conn, $chartPetugasQuery);
+$chartPetugasData = [];
+while($row = mysqli_fetch_assoc($chartPetugasResult)) {
+  $chartPetugasData[] = $row;
+}
+
+// Pie Chart Data Komplain (dari nama_mitra)
+$pieChartQuery = "SELECT nama_mitra, COUNT(*) as jumlah FROM penilaian_petugas GROUP BY nama_mitra LIMIT 5";
+$pieChartResult = mysqli_query($conn, $pieChartQuery);
+$pieChartData = [];
+while($row = mysqli_fetch_assoc($pieChartResult)) {
+  $pieChartData[] = $row;
+}
+
+// Data Material untuk tabel
+$materialTableQuery = "SELECT * FROM foto_material LIMIT 5";
+$materialTableResult = mysqli_query($conn, $materialTableQuery);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="icon" href="../assets/logo6.1.png">
 
   <style>
@@ -76,7 +150,7 @@
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Image</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Material</span>
         </a>
       </li>
 
@@ -118,7 +192,7 @@
 
   
   <!-- main -->
-  <div class="main flex flex-col justify-start items-center flex-1 min-h-screen bg-gray-100 pl-24 mt-14 transition-all duration-300">
+  <div class="main flex flex-col justify-start items-center flex-1 min-h-screen bg-gray-100 pl-24 my-14 transition-all duration-300">
     <div class="flex w-[1700px] mb-5">
       <h1 class="text-3xl font-semibold justify-start items-start">Dashboard</h1>
     </div>
@@ -138,25 +212,33 @@
         </div>
 
         <div class="flex flex-col items-start gap-3">
-
-          <div class="relative w-[360px] bg-gradient-to-r from-red-400 to-red-500 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
-            <span class="font-bold">1st</span>
-            <span class="font-semibold">Udin Jamal</span>
-            <span class="absolute right-[-95px] text-red-500 font-bold">95 Points!</span>
+          <?php
+          $colors = [
+            ['gradientFrom' => '#f87171', 'gradientTo' => '#ef4444', 'textColor' => '#dc2626'],
+            ['gradientFrom' => '#fdba74', 'gradientTo' => '#fb923c', 'textColor' => '#f97316'],
+            ['gradientFrom' => '#fcd34d', 'gradientTo' => '#fbbf24', 'textColor' => '#f59e0b']
+          ];
+          $positions = ['1st', '2nd', '3rd'];
+          $widths = ['360px', '420px', '480px'];
+          
+          // Pastikan selalu ada 3 item
+          while (count($topPetugas) < 3) {
+            $topPetugas[] = ['nama_petugas_close' => '-', 'total_skor' => 0];
+          }
+          
+          foreach($topPetugas as $index => $petugas):
+            if ($index >= 3) break;
+            $color = $colors[$index];
+            $position = $positions[$index];
+            $width = $widths[$index];
+          ?>
+          <div class="relative text-white rounded-md px-4 py-2 flex justify-between items-center shadow" 
+               style="width: <?= $width ?>; background: linear-gradient(to right, <?= $color['gradientFrom'] ?>, <?= $color['gradientTo'] ?>);">
+            <span class="font-bold"><?= $position ?></span>
+            <span class="font-semibold"><?= htmlspecialchars($petugas['nama_petugas_close']) ?></span>
+            <span class="absolute font-bold" style="right: -95px; color: <?= $color['textColor'] ?>;"><?= $petugas['total_skor'] ?> Points!</span>
           </div>
-
-          <div class="relative w-[420px] bg-gradient-to-r from-orange-300 to-orange-400 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
-            <span class="font-bold">2nd</span>
-            <span class="font-semibold">Soto malang enak</span>
-            <span class="absolute right-[-95px] text-orange-400 font-bold">93 Points!</span>
-          </div>
-
-          <div class="relative w-[480px] bg-gradient-to-r from-yellow-300 to-yellow-400 text-white rounded-md px-4 py-2 flex justify-between items-center shadow">
-            <span class="font-bold">3rd</span>
-            <span class="font-semibold">Ipul</span>
-            <span class="absolute right-[-95px] text-yellow-400 font-bold">81 Points!</span>
-          </div>
-
+          <?php endforeach; ?>
         </div>
 
       </div>
@@ -166,13 +248,13 @@
         <!-- Judul & Status -->
         <div class="flex justify-between items-center">
           <span class="text-2xl font-semibold">Total of Reports This Month!</span>
-          <span class="text-red-500 font-bold text-3xl">Bad</span>
+          <span class="text-<?= $statusColor ?> -500 font-bold text-3xl"><?= $status ?></span>
         </div>
 
         <!-- Icon + Angka -->
         <div class="flex items-center py-12 gap-6">
-          <img src="../assets/iconweb/crying.png" class="w-16 h-16" alt="">
-          <span class="text-5xl font-bold text-red-500">980 Reports</span>
+          <span class="text-6xl"><?= $statusEmoji ?></span>
+          <span class="text-5xl font-bold text-<?= $statusColor ?>-500"><?= $totalReports ?> Reports</span>
         </div>
 
       </div>
@@ -186,7 +268,7 @@
         <!-- Icon + Angka -->
         <div class="flex justify-center py-12 items-center gap-3">
           <img class="w-16 h-16" src="../assets/iconweb/folder-color.png" alt="">
-          <span class="text-5xl font-bold text-blue-600">7903 Data</span>
+          <span class="text-5xl font-bold text-blue-600"><?= $totalMaterial ?> Data</span>
         </div>
 
       </div>
@@ -194,17 +276,61 @@
 
 
       <!-- row 3 -->
-      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-80 relative">
+        <h2 class="font-semibold text-lg mb-4 absolute top-5 left-5">Chart Penilaian Petugas</h2>
+        <div style="padding-top: 50px; height: 100%;">
+          <canvas id="chartPetugas"></canvas>
+        </div>
       </div>
 
-      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      <div class="border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-80 relative">
+        <h2 class="font-semibold text-lg mb-4 absolute top-5 left-5">Data Komplain</h2>
+        <div style="padding-top: 50px; height: 100%;" class="flex justify-center items-center">
+          <div style="width: 250px; height: 200px;">
+            <canvas id="pieChartKomplain"></canvas>
+          </div>
+        </div>
       </div>
 
-      <div class="row-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-auto">
+      <div class="row-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-auto bg-[linear-gradient(135deg,_#4949ec_0%,_#643fc0_50%,_#a8abff_100%)]">
       </div>
 
       <!-- row 4 -->
-      <div class="col-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-64">
+      <div class="col-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5">
+        <h2 class="font-semibold text-lg mb-4">Data Material</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full rounded-lg border-collapse overflow-hidden shadow-md">
+            <thead>
+              <tr class="bg-gray-200 text-left">
+                <th class="px-4 py-2 border-b">No</th>
+                <th class="px-4 py-2 border-b">Nomor Material</th>
+                <th class="px-4 py-2 border-b">Nama</th>
+                <th class="px-4 py-2 border-b">Detail</th>
+                <th class="px-4 py-2 border-b">Foto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $no = 1;
+              while ($row = mysqli_fetch_assoc($materialTableResult)):
+              ?>
+              <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+                <td class="px-4 py-2 border-b"><?= $no++ ?></td>
+                <td class="px-4 py-2 border-b"><?= $row['nomor_material'] ?></td>
+                <td class="px-4 py-2 border-b"><?= $row['nama'] ?></td>
+                <td class="px-4 py-2 border-b"><?= $row['detail'] ?></td>
+                <td class="px-4 py-2 border-b">
+                  <?php if (!empty($row['foto'])): ?>
+                    <img src="../assets/<?= $row['foto'] ?>" alt="Foto" class="w-12 h-12 object-cover rounded">
+                  <?php else: ?>
+                    <span class="text-gray-400">-</span>
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <?php endwhile; ?>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
@@ -271,7 +397,80 @@
         }
       });
 
+    });
 
+    // Chart Penilaian Petugas
+    const chartPetugasCtx = document.getElementById('chartPetugas').getContext('2d');
+    const chartPetugasData = <?php echo json_encode($chartPetugasData); ?>;
+    
+    const sbuLabels = chartPetugasData.map(item => item.sbu);
+    const sbuValues = chartPetugasData.map(item => item.jumlah);
+
+    new Chart(chartPetugasCtx, {
+      type: 'bar',
+      data: {
+        labels: sbuLabels,
+        datasets: [{
+          label: 'Jumlah Penilaian',
+          data: sbuValues,
+          backgroundColor: 'rgba(75, 192, 192, 0.7)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Pie Chart Data Komplain
+    const pieChartCtx = document.getElementById('pieChartKomplain').getContext('2d');
+    const pieChartData = <?php echo json_encode($pieChartData); ?>;
+    
+    const mitraLabels = pieChartData.map(item => item.nama_mitra);
+    const mitraValues = pieChartData.map(item => item.jumlah);
+
+    const colors = [
+      'rgba(255, 99, 132, 0.7)',
+      'rgba(54, 162, 235, 0.7)',
+      'rgba(255, 206, 86, 0.7)',
+      'rgba(75, 192, 192, 0.7)',
+      'rgba(153, 102, 255, 0.7)'
+    ];
+
+    new Chart(pieChartCtx, {
+      type: 'doughnut',
+      data: {
+        labels: mitraLabels,
+        datasets: [{
+          data: mitraValues,
+          backgroundColor: colors.slice(0, mitraValues.length),
+          borderColor: colors.slice(0, mitraValues.length),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom'
+          }
+        }
+      }
     });
   </script>
 

@@ -81,13 +81,22 @@ $result = mysqli_query($conn, $query);
 
   <style>
     .sidebar-label {
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      white-space: nowrap;
-    }
-    .sidebar-label.show {
-      opacity: 1;
-    }
+    opacity: 0;
+    transform: translateX(-8px);
+    max-width: 0;
+    overflow: hidden;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      max-width 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .sidebar-label.show {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 160px;
+  }
 
     #sidebar {
       box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25);
@@ -384,7 +393,6 @@ $result = mysqli_query($conn, $query);
 
 
   <script>
-    // Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggleSidebar');
     const labels = document.querySelectorAll('.sidebar-label');
@@ -400,8 +408,9 @@ $result = mysqli_query($conn, $query);
       sidebar.classList.toggle('w-24', !open);
       sidebar.classList.toggle('w-60', open);
 
-      main.style.paddingLeft = open ? "15rem" : "6rem";
+      main.style.paddingLeft = open ? "18rem" : "6rem";
 
+      // item alignment smooth
       items.forEach(item => {
         if (open) {
           item.classList.add('justify-start', 'pl-10');
@@ -414,6 +423,7 @@ $result = mysqli_query($conn, $query);
         }
       });
 
+      // toggle button alignment
       if (open) {
         toggleBtn.classList.add('justify-start', 'pl-5');
         toggleBtn.classList.remove('justify-center');
@@ -424,13 +434,21 @@ $result = mysqli_query($conn, $query);
         }, 250);
       }
 
+      // label fade smooth
       labels.forEach(label => {
         if (open) {
           label.classList.remove('hidden');
-          setTimeout(() => label.classList.add('show'), 10);
+
+          requestAnimationFrame(() => {
+            label.classList.add('show');
+          });
+
         } else {
           label.classList.remove('show');
-          setTimeout(() => label.classList.add('hidden'), 200);
+
+          setTimeout(() => {
+            label.classList.add('hidden');
+          }, 250); // samain sama durasi transition
         }
       });
 
