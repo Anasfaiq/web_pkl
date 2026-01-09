@@ -76,7 +76,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Tulip Group | Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="icon" href="../assets/logo6.1.png">
@@ -150,15 +150,15 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Material</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Foto Material</span>
         </a>
       </li>
 
       <li class="p-2 pl-5 w-full flex justify-center cursor-pointer sidebar-item
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
-        <a href="#" class="flex justify-center items-center">
+        <a href="data_material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Folder</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Data Material</span>
         </a>
       </li>
 
