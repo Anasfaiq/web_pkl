@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Login</title>
   <link rel="stylesheet" href="../styles/index.css">
+  <link rel="stylesheet" href="../src/output.css">
   <link rel="icon" href="../assets/logo6.1.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>

@@ -77,6 +77,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tulip Group | Dashboard</title>
+  <link rel="stylesheet" href="../src/output.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="icon" href="../assets/logo6.1.png">
