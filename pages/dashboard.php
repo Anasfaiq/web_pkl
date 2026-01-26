@@ -31,17 +31,17 @@ $totalReports = $totalReportsData['total'];
 
 // Status berdasarkan jumlah reports
 if ($totalReports <= 5) {
-  $status = "Bad";
-  $statusColor = "red";
-  $statusEmoji = "😢";
-} elseif ($totalReports <= 10) {
   $status = "Good";
   $statusColor = "green";
   $statusEmoji = "😊";
+} elseif ($totalReports <= 10) {
+  $status = "Bad";
+  $statusColor = "yellow";
+  $statusEmoji = "😢";
 } else {
-  $status = "Excellent";
-  $statusColor = "blue";
-  $statusEmoji = "🎉";
+  $status = "Terrible";
+  $statusColor = "red";
+  $statusEmoji = "😡";
 }
 
 // Current Data Material
@@ -135,7 +135,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="laporan.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customenr Account</span>
         </a>
       </li>
 
@@ -143,7 +143,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="penilaian_petugas.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Experience</span>
         </a>
       </li>
 
@@ -151,7 +151,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Foto Material</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Management Asset</span>
         </a>
       </li>
 
@@ -159,7 +159,7 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="data_material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Data Material</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Management Inventory</span>
         </a>
       </li>
 
@@ -293,7 +293,8 @@ $materialTableResult = mysqli_query($conn, $materialTableQuery);
         </div>
       </div>
 
-      <div class="row-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-auto bg-[linear-gradient(135deg,_#4949ec_0%,_#643fc0_50%,_#a8abff_100%)]">
+      <div class="flex justify-center items-center row-span-2 border-1 border-gray-300 bg-white rounded-lg shadow-md w-auto p-5 h-auto bg-[linear-gradient(135deg,_#4949ec_0%,_#643fc0_50%,_#a8abff_100%)]">
+        <img src="../assets/logo6.png" alt="logo">
       </div>
 
       <!-- row 4 -->

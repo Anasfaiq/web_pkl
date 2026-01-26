@@ -101,7 +101,7 @@ $result = mysqli_query($conn, $query);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="laporan.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/customer-data.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Data</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Account</span>
         </a>
       </li>
 
@@ -109,7 +109,7 @@ $result = mysqli_query($conn, $query);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="penilaian_petugas.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/work.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Work</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Customer Experience</span>
         </a>
       </li>
 
@@ -117,7 +117,7 @@ $result = mysqli_query($conn, $query);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/image.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Material</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Management Asset</span>
         </a>
       </li>
 
@@ -125,7 +125,7 @@ $result = mysqli_query($conn, $query);
                 hover:bg-[#7b61ff33] hover:scale-[1.03] transition-all duration-200 ease-out">
         <a href="data_material.php" class="flex justify-center items-center">
           <img class="h-8 w-8 invert brightness-0" src="../assets/iconweb/folder.png" alt="">
-          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Data Material</span>
+          <span class="ml-3 sidebar-label hidden whitespace-nowrap">Management Inventory</span>
         </a>
       </li>
 
